@@ -3,11 +3,11 @@
 Welcome to The Third Alien - MP3 Tagger with iTunes Library search
 ===================
 ![HeaderImage](front.gif "HeaderImage")
-The Third Alien (i know, the name doesn't make any sense, it sounded cool at the moment so I went with it.) is a Windows desktop program which tags mp3 files.
+The year was 2016. I decided to build a mp3 tagger that gets info from iTunes library (well, because itunes have the biggest library ofc) myself. So, this is my fun summer project. :)
 
 > Features:
 > - Clear tags from file
-> - Search by keywords from iTunes library and automatically insert basic tags(title, artist name, album name, album artwork) to file
+> - Search by keywords from iTunes library and automatically insert basic tags(title, artist name, album name, album artwork etc) to file
 
 
 Big thanks to the developers who created the packages used in this project.
