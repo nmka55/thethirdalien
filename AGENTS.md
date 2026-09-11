@@ -138,3 +138,8 @@ Read [docs/REQUIREMENTS_AUDIT.md](docs/REQUIREMENTS_AUDIT.md) before marking any
 - Live iTunes query evidence is stored under `docs/evidence/`.
 - The most recently verified code sequence is `dotnet build ThirdAlien.slnx -c Release` and `dotnet test ThirdAlien.slnx -c Release`; 14 tests passed. Real disposable MP3/M4A evidence is in `docs/evidence/verification-2026-09-11.md`.
 - The WPF app has been launched locally. This is a smoke check only; it does not satisfy the real-file and visual acceptance checks listed above.
+## Release and demo evidence
+
+- A real packaged-app workflow GIF lives at ssets/demo/workflow.gif and is embedded in the README. It records disposable-file import, selection, edit, stage, and save.
+- scripts/Publish-Release.ps1 -Version <x.y.z> builds the self-contained win-x64 portable ZIP and Inno Setup installer locally after test success.
+- .github/workflows/release.yml uploads both artifacts on manual dispatch and creates a GitHub Release only for pushed * tags. Do not push a release tag without explicit user confirmation to publish that release.

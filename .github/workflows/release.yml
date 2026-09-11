@@ -1,0 +1,60 @@
+name: Build and release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version, for example 1.0.0"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Set release version
+        shell: pwsh
+        run: |
+          $version = "${{ inputs.version || github.ref_name }}" -replace '^v', ''
+          "RELEASE_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: Build and test
+        run: |
+          dotnet restore ThirdAlien.slnx --runtime win-x64
+          dotnet build ThirdAlien.slnx --configuration Release --no-restore
+          dotnet test ThirdAlien.slnx --configuration Release --no-build
+      - name: Publish self-contained portable build
+        run: |
+          dotnet publish src/ThirdAlien.App/ThirdAlien.App.csproj --configuration Release --runtime win-x64 --self-contained true --no-restore --output artifacts/portable/TheThirdAlien
+          Compress-Archive -Path artifacts/portable/TheThirdAlien/* -DestinationPath artifacts/TheThirdAlien-${env:RELEASE_VERSION}-win-x64-portable.zip
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress --yes
+      - name: Build installer
+        run: iscc /DMyAppVersion=${env:RELEASE_VERSION} /Oartifacts/installer installer/TheThirdAlien.iss
+      - name: Publish workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: TheThirdAlien-${{ env.RELEASE_VERSION }}-win-x64
+          path: |
+            artifacts/TheThirdAlien-${{ env.RELEASE_VERSION }}-win-x64-portable.zip
+            artifacts/installer/TheThirdAlien-Setup-${{ env.RELEASE_VERSION }}-win-x64.exe
+          if-no-files-found: error
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            artifacts/TheThirdAlien-${{ env.RELEASE_VERSION }}-win-x64-portable.zip
+            artifacts/installer/TheThirdAlien-Setup-${{ env.RELEASE_VERSION }}-win-x64.exe

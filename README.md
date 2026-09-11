@@ -8,7 +8,13 @@ The Third Alien is a Windows audio metadata editor. It finds music-album informa
 
 It began as a small Windows Forms project in 2016. The current rewrite is a .NET 10 WPF application that keeps the original idea while adding safer file writes, album matching, artwork selection, full-tag editing, and light/dark themes.
 
-> **Development status:** the modern rewrite is usable for local editing and reviewable album batch tagging. It is not yet packaged as an installer or portable release.
+> **Development status:** the modern rewrite is usable for local editing and reviewable album batch tagging. Release builds provide a self-contained Windows x64 portable ZIP and an installer EXE.
+
+## Quick walkthrough
+
+![The Third Alien: import a local track, edit its title, stage the change, and save it with verified backup handling.](assets/demo/workflow.gif)
+
+The recording uses a disposable local MP3 and shows the actual import, selection, edit, stage, and save workflow.
 
 ## What it does
 
@@ -75,6 +81,22 @@ dotnet test ThirdAlien.slnx --configuration Release
 dotnet run --project src/ThirdAlien.App/ThirdAlien.App.csproj --configuration Release
 ```
 
+## Release builds
+
+A release includes two Windows x64, self-contained artifacts:
+
+- `TheThirdAlien-<version>-win-x64-portable.zip`: unzip and run `ThirdAlien.App.exe`; no .NET runtime install is needed.
+- `TheThirdAlien-Setup-<version>-win-x64.exe`: modern Inno Setup installer with Start-menu and optional desktop shortcuts.
+
+Build both locally with Inno Setup 6 installed:
+
+```powershell
+.\scripts\Publish-Release.ps1 -Version 0.1.0
+```
+
+The command restores for `win-x64`, builds, runs the test suite, publishes the self-contained app, creates the portable ZIP, and compiles the installer. Outputs are written to the ignored `artifacts/` directory.
+
+[`.github/workflows/release.yml`](.github/workflows/release.yml) automates the same build on GitHub-hosted Windows runners. Run it manually from **Actions** to receive downloadable workflow artifacts, or push a signed-off version tag such as `v0.1.0` to create a GitHub Release with both files and generated release notes.
 ## Project layout
 
 | Project | Responsibility |
