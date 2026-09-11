@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../ThirdAlien.Core/ThirdAlien.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="z440.atl.core" />
+  </ItemGroup>
+</Project>

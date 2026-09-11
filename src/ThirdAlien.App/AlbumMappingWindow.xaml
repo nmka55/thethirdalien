@@ -1,0 +1,35 @@
+<Window x:Class="ThirdAlien.App.AlbumMappingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:icons="clr-namespace:FluentIcons.Wpf;assembly=FluentIcons.Wpf"
+        Title="Match album tracks" Width="1000" Height="620" MinWidth="760" MinHeight="460" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource AppBackground}" Foreground="{DynamicResource ForegroundBrush}">
+    <DockPanel Margin="16">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Cancel" IsCancel="True" />
+            <Button Content="Write matched tags" IsDefault="True" Click="Save_Click" Margin="0" />
+        </StackPanel>
+        <TextBlock DockPanel.Dock="Top" Margin="0,0,0,12" TextWrapping="Wrap" Foreground="{DynamicResource MutedForegroundBrush}" Text="Move selected-file entries up or down to align them with the album track number. Every row remains visible; only rows containing both an album track and a file will be written." />
+        <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="72" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+            <DataGrid ItemsSource="{Binding TrackSlots}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding Position}" Width="48" />
+                    <DataGridTextColumn Header="Track" Binding="{Binding Track.Name}" Width="*" />
+                    <DataGridTextColumn Header="Artist" Binding="{Binding Track.Artist}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Width="44" Height="40" Padding="0" ToolTip="Move selected file up" Click="MoveUp_Click"><icons:FluentIcon Icon="ArrowUp" IconSize="Size20" /></Button>
+                <Button Width="44" Height="40" Padding="0" Margin="0,8,0,0" ToolTip="Move selected file down" Click="MoveDown_Click"><icons:FluentIcon Icon="ArrowDown" IconSize="Size20" /></Button>
+            </StackPanel>
+            <DataGrid Grid.Column="2" ItemsSource="{Binding FileSlots}" SelectedItem="{Binding SelectedSlot, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" Binding="{Binding Position}" Width="48" />
+                    <DataGridTextColumn Header="File" Binding="{Binding File.FileName}" Width="*" />
+                    <DataGridTextColumn Header="Current title" Binding="{Binding File.Snapshot.Metadata.Title}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</Window>

@@ -1,0 +1,19 @@
+# Build products and local IDE state
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# User data and release outputs
+.thirdalien/
+artifacts/
+publish/
+*.thirdalien-backup-*
+*.thirdalien-temp-*
+
+# Never commit signing material
+*.pfx
+*.snk

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/ThirdAlien.App/ThirdAlien.App.csproj" />
+  <Project Path="src/ThirdAlien.Core/ThirdAlien.Core.csproj" />
+  <Project Path="src/ThirdAlien.Infrastructure/ThirdAlien.Infrastructure.csproj" />
+  <Project Path="tests/ThirdAlien.Tests/ThirdAlien.Tests.csproj" />
+</Solution>
