@@ -12,7 +12,7 @@ It began as a small Windows Forms project in 2016. The current rewrite is a .NET
 
 ## Quick walkthrough
 
-![The Third Alien: import a local track, edit its title, stage the change, and save it with verified backup handling.](assets/demo/workflow.gif)
+![The Third Alien: import a local track, edit its title, stage the change, and save it with verified backup handling.](front.gif)
 
 The recording uses a disposable local MP3 and shows the actual import, selection, edit, stage, and save workflow.
 
